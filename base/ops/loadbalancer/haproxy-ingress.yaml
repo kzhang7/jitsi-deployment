@@ -4,7 +4,7 @@ metadata:
   name: haproxy-ingress
   namespace: jitsi
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "meet-us-west1-ip"
+    kubernetes.io/ingress.global-static-ip-name: "<gcp_static_ip_name>"
 spec:
   tls:
   - hosts:

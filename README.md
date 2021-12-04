@@ -155,6 +155,16 @@ Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
 Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
 Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
 
+
+10. Reserve a static IP in GCP https://console.cloud.google.com/networking/addresses/list. For example: `meet-us-west1-ip`
+
+11. Add A record in the DNS entry for meet-us-west1.livestand.io
+
+12. Add the following annotation to the `haproxy-ingress.yaml` and `grafana-ingress.yaml`
+```
+kubernetes.io/ingress.global-static-ip-name: "meet-us-west1-ip"
+```
+
 10. Install Metacontroller
 ```
 kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
