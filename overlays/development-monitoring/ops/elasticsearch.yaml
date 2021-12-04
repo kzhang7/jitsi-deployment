@@ -33,4 +33,4 @@ spec:
             resources:
               requests:
                 storage: 5Gi
-            storageClassName: ionos-enterprise-hdd
+            storageClassName: gp2

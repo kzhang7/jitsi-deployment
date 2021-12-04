@@ -144,6 +144,10 @@ For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubern
 6. Update the ingress domain
 
 Replace `jitsi.messenger.schule` with `jitsi-us-west1.livestand.io`
+Replace `jitsi-us-west1-livestand-io` with `jitsi-us-west1.livestand.io`
+
+Replace `jitsi.dev.messenger.schule` with `jitsi-us-west1-dev.livestand.io`
+Replace `jitsi.staging.messenger.schule` with `jitsi-us-west1-dev.livestand.io`
 
 7. Install Metacontroller
 ```

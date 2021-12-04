@@ -4,7 +4,7 @@ metadata:
   namespace: monitoring
   name: grafana-storage
 spec:
-  storageClassName: ionos-enterprise-hdd
+  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   resources:
