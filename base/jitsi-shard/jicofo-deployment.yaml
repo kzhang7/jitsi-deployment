@@ -29,7 +29,7 @@ spec:
             requests:
               memory: 400Mi
               cpu: 400m
-          image: jitsi/jicofo:stable-4548-1
+          image: jitsi/jicofo:stable-6433
           imagePullPolicy: Always
           readinessProbe:
             # caution: this readinessProbe tries to create a new conference and hence also fails if

@@ -138,12 +138,16 @@ vi secretsfile
 ./secrets.sh secretsfile production
 ```
 
-6. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
+6. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`
+
+7. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml
+
+8. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
 
 For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
 
 
-7. Update the ingress domain
+9. Update the ingress domain
 
 Replace `jitsi.messenger.schule` with `meet-us-west1.livestand.io`
 Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
@@ -151,13 +155,13 @@ Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
 Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
 Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
 
-8. Install Metacontroller
+10. Install Metacontroller
 ```
 kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
 kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
 ```
 
-9. Deploy everything
+11. Deploy everything
 ```
 cd overlays/production-monitoring
 kustomize build . | kubectl apply -f -
