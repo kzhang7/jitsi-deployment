@@ -130,7 +130,7 @@ sudo cp kustomize /usr/bin
 sudo chmod 755 /usr/bin/kustomize
 ```
 
-4. Replace all storage class from `ionos-enterprise-hdd` to `gp2`
+4. Replace all storage class from `ionos-enterprise-hdd` to `standard` or `standard-rwo` or `premium-rwo` depends on your needs.
 
 5. Update all the secrets
 ```
