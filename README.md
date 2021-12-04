@@ -165,13 +165,13 @@ Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
 kubernetes.io/ingress.global-static-ip-name: "meet-us-west1-ip"
 ```
 
-10. Install Metacontroller
+13. Install Metacontroller
 ```
 kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
 kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
 ```
 
-11. Deploy everything
+14. Deploy everything
 ```
 cd overlays/production-monitoring
 kustomize build . | kubectl apply -f -
