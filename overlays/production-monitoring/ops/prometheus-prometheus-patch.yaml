@@ -18,7 +18,7 @@ spec:
         name: prometheus
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: gp2
+        storageClassName: ionos-enterprise-hdd
         resources:
           requests:
             storage: 100Gi
