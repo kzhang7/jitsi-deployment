@@ -83,3 +83,5 @@ spec:
               value: UTC
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
+            - name: PUBLIC_URL
+              value: "https://meet-us-west1.livestand.io"
