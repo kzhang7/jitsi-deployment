@@ -46,7 +46,7 @@ spec:
             resources:
               requests:
                 storage: 5Gi
-            storageClassName: ionos-enterprise-hdd
+            storageClassName: standard
     - name: client
       count: 2
       config:
