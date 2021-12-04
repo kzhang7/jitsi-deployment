@@ -110,3 +110,50 @@ The monitoring stack that is set up by this project is currently also used by an
 for [Big Blue Button](https://bigbluebutton.org/). Therefore, some of the files here contain configurations to monitor
 that setup. To exclude them delete all files starting with `bbb-` and remove the file names from the respective
 `kustomization.yaml` files.
+
+
+## Installation
+
+1. Create a k8s cluster in auto pilot mode in GKE, for example: `jitsi-us-west1`
+
+2. Switch to that k8s cluster
+```
+gcloud config set account zhangkan440@gmail.com
+gcloud config set project livestand
+gcloud container clusters get-credentials jitsi-us-west1 --region=us-west1
+kubectl config use-context gke_livestand_us-west1_jitsi-us-west1
+```
+
+3. Install kustomize v3.5.4
+```
+sudo cp kustomize /usr/bin
+sudo chmod 755 /usr/bin/kustomize
+```
+
+4. Update all the secrets
+```
+vi secretsfile
+./secrets.sh secretsfile production
+```
+
+5. Remova all the nodeSelectors for `topology.kubernetes.io/zone` in all files because auto pilot manages the nodes and does not allow you specify zones
+
+
+6. Update the ingress domain
+
+Replace `jitsi.messenger.schule` with `jitsi-us-west1.livestand.io`
+
+5. Install Metacontroller
+```
+kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
+kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
+```
+
+6. Deploy everything
+```
+cd overlays/production
+kustomize build . | kubectl apply -f -
+
+cd overlays/production-monitoring
+kustomize build . | kubectl apply -f -
+```
