@@ -19,6 +19,7 @@ resources:
 - turn-service.yaml
 - turn-service-monitor.yaml
 - haproxy-pod-monitor.yaml
+- gcp-storage-class.yaml
 
 patchesStrategicMerge:
 - metrics-server-patch.yaml

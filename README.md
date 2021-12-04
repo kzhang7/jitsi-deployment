@@ -130,18 +130,20 @@ sudo cp kustomize /usr/bin
 sudo chmod 755 /usr/bin/kustomize
 ```
 
-4. Update all the secrets
+4. Replace all storage class from `ionos-enterprise-hdd` to `gp2`
+
+5. Update all the secrets
 ```
 vi secretsfile
 ./secrets.sh secretsfile production
 ```
 
-5. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
+6. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
 
 For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
 
 
-6. Update the ingress domain
+7. Update the ingress domain
 
 Replace `jitsi.messenger.schule` with `meet-us-west1.livestand.io`
 Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
@@ -149,17 +151,18 @@ Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
 Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
 Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
 
-7. Install Metacontroller
+8. Install Metacontroller
 ```
 kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
 kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
 ```
 
-8. Deploy everything
+9. Deploy everything
 ```
+cd overlays/production-monitoring
+kustomize build . | kubectl apply -f -
+
 cd overlays/production
 kustomize build . | kubectl apply -f -
 
-cd overlays/production-monitoring
-kustomize build . | kubectl apply -f -
 ```
