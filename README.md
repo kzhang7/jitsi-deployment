@@ -114,7 +114,7 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 
 ## Installation
 
-1. Create a k8s cluster in auto pilot mode in GKE, for example: `jitsi-us-west1`
+1. Create a k8s cluster in standard mode in GKE (auto-pilot mode does not work), for example: `jitsi-us-west1`, with at least two zones
 
 2. Switch to that k8s cluster
 ```
@@ -136,20 +136,22 @@ vi secretsfile
 ./secrets.sh secretsfile production
 ```
 
-5. Remova all the nodeSelectors for `topology.kubernetes.io/zone` in all files because auto pilot manages the nodes and does not allow you specify zones
+5. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
+
+For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
 
 
 6. Update the ingress domain
 
 Replace `jitsi.messenger.schule` with `jitsi-us-west1.livestand.io`
 
-5. Install Metacontroller
+7. Install Metacontroller
 ```
 kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
 kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
 ```
 
-6. Deploy everything
+8. Deploy everything
 ```
 cd overlays/production
 kustomize build . | kubectl apply -f -
