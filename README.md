@@ -138,7 +138,7 @@ vi secretsfile
 ./secrets.sh secretsfile production
 ```
 
-6. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`
+6. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`. Also need to update the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
 
 7. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml
 
@@ -156,14 +156,19 @@ Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
 Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
 
 
-10. Reserve a static IP in GCP https://console.cloud.google.com/networking/addresses/list. For example: `meet-us-west1-ip`
+10. Setup static IP:
 
-11. Add A record in the DNS entry for meet-us-west1.livestand.io
+    10.1. Reserve a static IP in GCP https://console.cloud.google.com/networking/addresses/list. For example: `meet-us-west1-ip`
 
-12. Add the following annotation to the `haproxy-ingress.yaml` and `grafana-ingress.yaml`
-```
-kubernetes.io/ingress.global-static-ip-name: "meet-us-west1-ip"
-```
+    10.2. Add A record in the DNS entry for meet-us-west1.livestand.io
+
+    10.3. Add the following annotation to the `haproxy-ingress.yaml` and `grafana-ingress.yaml`
+    ```
+    kubernetes.io/ingress.global-static-ip-name: "meet-us-west1-ip"
+    ```
+
+11. Replace `UTC` timezone with `UTC`
+
 
 13. Install Metacontroller
 ```

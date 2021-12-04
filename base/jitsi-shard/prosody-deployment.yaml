@@ -104,7 +104,7 @@ spec:
                   name: jitsi-config
                   key: JICOFO_AUTH_PASSWORD
             - name: TZ
-              value: Europe/Berlin
+              value: UTC
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
             # activate add-ons that enrich the available stats of prosody

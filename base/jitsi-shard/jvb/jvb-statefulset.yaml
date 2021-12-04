@@ -110,4 +110,4 @@ spec:
             - name: JVB_BREWERY_MUC
               value: jvbbrewery
             - name: TZ
-              value: Europe/Berlin
+              value: UTC
