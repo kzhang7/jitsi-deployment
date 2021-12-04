@@ -111,77 +111,74 @@ for [Big Blue Button](https://bigbluebutton.org/). Therefore, some of the files 
 that setup. To exclude them delete all files starting with `bbb-` and remove the file names from the respective
 `kustomization.yaml` files.
 
+## Updates for GCP
+
+1. Replace all storage class from `ionos-enterprise-hdd` to `standard` or `standard-rwo` or `premium-rwo` depends on your needs.
+
+2. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`.
+
+   1. Update the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
+   2. Update the `jitsi-meet.cfg.lua` to the latest version in `prosody-configmap.yaml`
+
+3. Add `XMPP_MUC_DOMAIN` env with value `muc.meet.jitsi` in `jicofo-deployment.yaml` to fix the [Communication with remote domains is not enabled] issue: <https://github.com/jitsi/docker-jitsi-meet/issues/929>
+
+4. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml. Replace `Europe/Berlin` timezone with `UTC`.
+
+5. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
+
+    For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
 
 ## Installation
 
 1. Create a k8s cluster in standard mode in GKE (auto-pilot mode does not work), for example: `meet-us-west1`, with at least two zones
 
 2. Switch to that k8s cluster
-```
-gcloud config set account zhangkan440@gmail.com
-gcloud config set project livestand
-gcloud container clusters get-credentials meet-us-west1 --region=us-west1
-kubectl config use-context gke_livestand_us-west1_meet-us-west1
-```
+
+    ```bash
+    gcloud config set account zhangkan440@gmail.com
+    gcloud config set project livestand
+    gcloud container clusters get-credentials meet-us-west1 --region=us-west1
+    kubectl config use-context gke_livestand_us-west1_meet-us-west1
+    ```
 
 3. Install kustomize v3.5.4
-```
-sudo cp kustomize /usr/bin
-sudo chmod 755 /usr/bin/kustomize
-```
 
-4. Replace all storage class from `ionos-enterprise-hdd` to `standard` or `standard-rwo` or `premium-rwo` depends on your needs.
-
-5. Update all the secrets
-```
-vi secretsfile
-./secrets.sh secretsfile production
-```
-
-6. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`. Also need to update the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
-
-7. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml
-
-8. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
-
-For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
-
-
-9. Update the ingress domain
-
-Replace `jitsi.messenger.schule` with `meet-us-west1.livestand.io`
-Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
-
-Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
-Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
-
-
-10. Setup static IP:
-
-    10.1. Reserve a static IP in GCP https://console.cloud.google.com/networking/addresses/list. For example: `meet-us-west1-ip`
-
-    10.2. Add A record in the DNS entry for meet-us-west1.livestand.io
-
-    10.3. Add the following annotation to the `haproxy-ingress.yaml` and `grafana-ingress.yaml`
-    ```
-    kubernetes.io/ingress.global-static-ip-name: "meet-us-west1-ip"
+    ```bash
+    sudo cp kustomize /usr/bin
+    sudo chmod 755 /usr/bin/kustomize
     ```
 
-11. Replace `UTC` timezone with `UTC`
+4. Update all the secrets
 
+    ```bash
+    vi secretsfile
+    ./secrets.sh secretsfile production
+    ```
 
-13. Install Metacontroller
-```
-kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
-kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
-```
+5. Update the ingress domain
 
-14. Deploy everything
-```
-cd overlays/production-monitoring
-kustomize build . | kubectl apply -f -
+    Replace `jitsi.messenger.schule` with `meet-us-west1.livestand.io`
+    Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
 
-cd overlays/production
-kustomize build . | kubectl apply -f -
+    Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
+    Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
 
-```
+6. Install Metacontroller
+
+    ```bash
+    kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
+    kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
+    ```
+
+7. Deploy everything
+
+    ```bash
+    cd overlays/production-monitoring
+    kustomize build . | kubectl apply -f -
+
+    cd overlays/production
+    kustomize build . | kubectl apply -f -
+
+    ```
+
+8. Reserve a static IP in GCP <https://console.cloud.google.com/networking/addresses/list> for the load balancer.
