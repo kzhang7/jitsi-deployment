@@ -164,6 +164,6 @@ spec:
                   name: jitsi-config
                   key: JWT_APP_SECRET
             - name: JWT_ALLOW_EMPTY
-              value: "true"
+              value: "false"
             - name: JWT_TOKEN_AUTH_MODULE
               value: token_verification
