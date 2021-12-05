@@ -84,7 +84,7 @@ spec:
             - name: JVB_TCP_HARVESTER_DISABLED
               value: "true"
             - name: PUBLIC_URL
-              value: "https://meet-us-west1.livestand.io
+              value: "https://meet-us-west1.livestand.io"
             - name: DEFAULT_LANGUAGE
               value: 'en-US'
             - name: DISABLE_AUDIO_LEVELS
