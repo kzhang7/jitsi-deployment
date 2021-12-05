@@ -140,4 +140,34 @@ spec:
                   key: TURNS_PORT
             - name: PUBLIC_URL
               value: "https://meet-us-west1.livestand.io"
-            
+            - name: AUTH_TYPE
+              value: jwt
+            - name: DISABLE_POLLS
+              value: false
+            - name: ENABLE_AUTH
+              value: true
+            - name: ENABLE_AV_MODERATION
+              value: true
+            - name: ENABLE_BREAKOUT_ROOMS
+              value: false
+            - name: ENABLE_GUESTS
+              value: false
+            - name: ENABLE_LOBBY
+              value: false
+            - name: ENABLE_XMPP_WEBSOCKET
+              value: true
+            - name: JWT_APP_ID
+              value: 'livestand.io'
+            - name: JWT_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jitsi-config
+                  key: JWT_APP_SECRET
+            - name: JWT_ALLOW_EMPTY
+              value: true
+            - name: JWT_ACCEPTED_ISSUERS
+              value: ''
+            - name: JWT_ACCEPTED_AUDIENCES
+              value: ''
+            - name: JWT_TOKEN_AUTH_MODULE
+              value: token_verification

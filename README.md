@@ -118,7 +118,7 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 2. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`.
 
    1. Update the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
-   2. Update the `jitsi-meet.cfg.lua` to the latest version in `prosody-configmap.yaml`
+   2. Update the `jitsi-meet.cfg.lua` to the latest version in `prosody-configmap.yaml`. See (<https://github.com/jitsi/docker-jitsi-meet/blob/master/prosody/rootfs/defaults/conf.d/jitsi-meet.cfg.lua>)
 
 3. Add `XMPP_MUC_DOMAIN` env with value `muc.meet.jitsi` in `jicofo-deployment.yaml` to fix the [Communication with remote domains is not enabled] issue: <https://github.com/jitsi/docker-jitsi-meet/issues/929>
 
