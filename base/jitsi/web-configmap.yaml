@@ -1356,6 +1356,7 @@ data:
          requireDisplayName
          tokenAuthUrl
          */
+        tokenAuthUrl: 'https://app.livestand.io/join/{room}',
 
         /**
          * This property can be used to alter the generated meeting invite links (in combination with a branding domain

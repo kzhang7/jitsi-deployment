@@ -90,7 +90,7 @@ spec:
             - name: DISABLE_AUDIO_LEVELS
               value: "false"
             - name: DISABLE_DEEP_LINKING
-              value: "false"
+              value: "true"
             - name: DISABLE_HTTPS
               value: "false"
             - name: DISABLE_POLLS
