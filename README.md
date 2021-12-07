@@ -143,17 +143,19 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
    web-deployment-patch.yaml
    ```
 
+2. Updated `haproxy-configmap.yaml` to point prosody svc directly
+
 ## Installation
 
-1. Create a k8s cluster in standard mode in GKE (auto-pilot mode does not work), for example: `meet-us-west1`, with at least two zones
+1. Create a k8s cluster in standard mode in GKE (auto-pilot mode does not work), for example: `c1-us-west1.meet`, with at least two zones
 
 2. Switch to that k8s cluster
 
     ```bash
     gcloud config set account zhangkan440@gmail.com
     gcloud config set project livestand
-    gcloud container clusters get-credentials meet-us-west1 --region=us-west1
-    kubectl config use-context gke_livestand_us-west1_meet-us-west1
+    gcloud container clusters get-credentials c1-us-west1.meet --region=us-west1
+    kubectl config use-context gke_livestand_us-west1_c1-us-west1.meet
     ```
 
 3. Install kustomize v3.5.4
@@ -172,11 +174,11 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 
 5. Update the ingress domain
 
-    Replace `jitsi.messenger.schule` with `meet-us-west1.livestand.io`
-    Replace `jitsi-messenger-schule` with `meet-us-west1.livestand.io`
+    Replace `jitsi.messenger.schule` with `c1-us-west1.meet.livestand.io`
+    Replace `jitsi-messenger-schule` with `c1-us-west1-meet-livestand-io`
 
-    Replace `jitsi.dev.messenger.schule` with `meet-us-west1-dev.livestand.io`
-    Replace `jitsi.staging.messenger.schule` with `meet-us-west1-dev.livestand.io`
+    Replace `jitsi.dev.messenger.schule` with `c1-us-west1.meet-dev.livestand.io`
+    Replace `jitsi.staging.messenger.schule` with `c1-us-west1.meet-dev.livestand.io`
 
 6. Install Metacontroller
 

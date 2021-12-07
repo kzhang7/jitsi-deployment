@@ -141,7 +141,7 @@ spec:
                   name: jitsi-config
                   key: TURNS_PORT
             - name: PUBLIC_URL
-              value: "https://meet-us-west1.livestand.io"
+              value: "https://jitsi.messenger.schule"
             - name: AUTH_TYPE
               value: jwt
             - name: DISABLE_POLLS
