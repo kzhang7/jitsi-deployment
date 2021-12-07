@@ -124,11 +124,24 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 
 4. Add `PUBLIC_URL` env with value of the public URL in `prosody-deployment.yaml` and `web-deployment.yaml` to fix the wss pointing to localhost issue: <https://community.jitsi.org/t/solved-bridgechannel-js-85-websocket-connection-to-wss-localhost-8443-colibri-ws-failed/86752/4>
 
-5. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml. Replace `Europe/Berlin` timezone with `UTC`.
+5. Added missing environment variables in `prosody-deployment.yaml` and `web-deployment.yaml`.
 
-6. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
+6. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml. Replace `Europe/Berlin` timezone with `UTC`.
+
+7. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
 
     For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
+
+## Customization: Remove web deployments and move it to GCP app engine to save cost
+
+1. Remove the following files:
+
+   ```text
+   web-configmap.yaml
+   web-service.yaml
+   web-deployment.yaml
+   web-deployment-patch.yaml
+   ```
 
 ## Installation
 

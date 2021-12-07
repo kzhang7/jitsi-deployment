@@ -76,6 +76,8 @@ spec:
           env:
             - name: XMPP_DOMAIN
               value: meet.jitsi
+            - name: XMPP_CROSS_DOMAIN
+              value: "true"
             - name: XMPP_AUTH_DOMAIN
               value: auth.meet.jitsi
             - name: XMPP_MUC_DOMAIN
