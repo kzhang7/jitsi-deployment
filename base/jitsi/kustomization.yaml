@@ -7,6 +7,8 @@ resources:
 - prosody-configmap.yaml
 - jvb-entrypoint-configmap.yaml
 - jvb-shutdown-configmap.yaml
+- web-configmap.yaml
+- web-service.yaml
 
 commonLabels:
   scope: jitsi

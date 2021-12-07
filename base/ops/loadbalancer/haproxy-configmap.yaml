@@ -18,7 +18,6 @@ data:
       stats socket ipv4@127.0.0.1:9999 level admin
       stats socket /var/run/hapee-lb.sock mode 666 level admin
       stats timeout 2m
-
     defaults
       log               global
       option            httplog
@@ -27,21 +26,16 @@ data:
       timeout connect   5s
       timeout client    50s
       timeout server    50s
-
     resolvers kube-dns
       # kubernetes DNS is defined in resolv.conf
       parse-resolv-conf
       hold valid 10s
-
     frontend http_in
       bind *:80
       mode http
       option forwardfor
       option http-keep-alive
       default_backend jitsi-meet
-      acl url_health_check path /
-      use_backend health-check if url_health_check
-
     # expose statistics in Prometheus format
     frontend stats
       mode http
@@ -51,12 +45,10 @@ data:
       stats enable
       stats uri /stats
       stats refresh 10s
-
     peers mypeers
       log stdout format raw local0 info
       peer "${HOSTNAME}" "${MY_POD_IP}:1024"
       peer "${OTHER_HOSTNAME}" "${OTHER_IP}:1024"
-
     backend jitsi-meet
       balance roundrobin
       mode http
@@ -66,13 +58,7 @@ data:
       acl room_found urlp(room) -m found
       stick-table type string len 128 size 2k expire 1d peers mypeers
       stick on hdr(Room) if room_found
-      # _http._tcp.prosody.jitsi.svc.cluster.local:80 is a SRV DNS record
+      # _http._tcp.web.jitsi.svc.cluster.local:80 is a SRV DNS record
       # A records don't work here because their order might change between calls and would result in different
-      option httpchk GET /xmpp-websocket?room=__jicofo-health-check HTTP/1.1rnHost:\ meet.livestand.io\r\nConnection:\ Upgrade\r\nUpgrade:\ websocket\r\nSec-WebSocket-Key:\ haproxy\r\nSec-WebSocket-Version:\ 13\r\nSec-WebSocket-Protocol:\ echo-protocol
-      http-check expect status 101
       # shard IDs for each peered HAproxy
-      server-template shard 0-5 _http._tcp.prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
-      
-    backend health-check
-      mode http
-      http-request return status 200 content-type "text/plain" string OK
+      server-template shard 0-5 _http._tcp.web.jitsi.svc.cluster.local:80 check resolvers kube-dns init-addr none

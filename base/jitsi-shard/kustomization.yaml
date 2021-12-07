@@ -5,6 +5,7 @@ resources:
 - jicofo-deployment.yaml
 - prosody-deployment.yaml
 - prosody-service.yaml
+- web-deployment.yaml
 - jvb/
 
 commonLabels:
