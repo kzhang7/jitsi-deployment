@@ -77,7 +77,7 @@ spec:
             - name: XMPP_DOMAIN
               value: meet.jitsi
             - name: XMPP_CROSS_DOMAIN
-              value: "true"
+              value: "false"
             - name: XMPP_AUTH_DOMAIN
               value: auth.meet.jitsi
             - name: XMPP_MUC_DOMAIN
@@ -140,6 +140,8 @@ spec:
                 secretKeyRef:
                   name: jitsi-config
                   key: TURNS_PORT
+            - name: PUBLIC_URL
+              value: https://meet.livestand.io
             - name: AUTH_TYPE
               value: jwt
             - name: DISABLE_POLLS
