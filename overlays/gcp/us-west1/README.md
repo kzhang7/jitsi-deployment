@@ -24,13 +24,12 @@
 4. Deploy everything
 
     ```bash
-    vi secretsfile
-    ./secrets.sh secretsfile production
+    ./secrets.sh secretsfile
 
-    cd ./ops
+    cd overlay/gcp/us-west1/ops
     kustomize build . | kubectl apply -f -
 
-    cd ./jisti
+    cd ../jisti
     kustomize build . | kubectl apply -f -
 
     git reset --hard
