@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: haproxy-ingress
   namespace: jitsi
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: "<gcp_static_ip_name>"
 spec:
   tls:
   - hosts:

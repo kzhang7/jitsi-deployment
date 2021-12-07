@@ -6,4 +6,3 @@ metadata:
   annotations:
     # necessary to create more complex ingress rules
     nginx.ingress.kubernetes.io/use-regex: "true"
-    kubernetes.io/ingress.global-static-ip-name: "<gcp_static_ip_name>"

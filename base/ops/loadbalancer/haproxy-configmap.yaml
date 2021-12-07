@@ -39,6 +39,8 @@ data:
       option forwardfor
       option http-keep-alive
       default_backend jitsi-meet
+      acl url_health_check path /
+      use_backend health-check if url_health_check
 
     # expose statistics in Prometheus format
     frontend stats
@@ -66,5 +68,11 @@ data:
       stick on hdr(Room) if room_found
       # _http._tcp.prosody.jitsi.svc.cluster.local:80 is a SRV DNS record
       # A records don't work here because their order might change between calls and would result in different
+      option httpchk GET /xmpp-websocket?room=__jicofo-health-check HTTP/1.1rnHost:\ meet.livestand.io\r\nConnection:\ Upgrade\r\nUpgrade:\ websocket\r\nSec-WebSocket-Key:\ haproxy\r\nSec-WebSocket-Version:\ 13\r\nSec-WebSocket-Protocol:\ echo-protocol
+      http-check expect status 101
       # shard IDs for each peered HAproxy
       server-template shard 0-5 _http._tcp.prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      
+    backend health-check
+      mode http
+      http-request return status 200 content-type "text/plain" string OK

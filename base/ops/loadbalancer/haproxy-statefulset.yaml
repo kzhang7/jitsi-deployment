@@ -36,7 +36,7 @@ spec:
                 path: haproxy.cfg
       containers:
       - name: haproxy
-        image: haproxy:2.1
+        image: haproxy:2.2
         # enable peering between HAProxy-pods
         # look up ip address of other HAProxy instance and export it
         # those variables are then used in haproxy.cfg defined in ./haproxy-configmap.yaml
