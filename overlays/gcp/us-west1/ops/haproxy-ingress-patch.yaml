@@ -6,10 +6,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - jitsi.messenger.schule
-    secretName: jitsi-messenger-schule-tls
+    - c1-us-west1.meet.livestand.io
+    secretName: meet-livestand-io-tls
   rules:
-    - host: jitsi.messenger.schule
+    - host: c1-us-west1.meet.livestand.io
       http:
         paths:
         - path: /

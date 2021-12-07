@@ -7,7 +7,7 @@ spec:
   tls:
   - hosts:
     - jitsi.staging.messenger.schule
-    secretName: jitsi-messenger-schule-tls
+    secretName: meet-livestand-io-tls
   rules:
     - host: jitsi.staging.messenger.schule
       http:

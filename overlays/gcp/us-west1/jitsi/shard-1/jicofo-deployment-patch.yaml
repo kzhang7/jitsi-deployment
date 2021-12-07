@@ -10,7 +10,7 @@ spec:
     spec:
       # avoid that pods of different shards share zone
       nodeSelector:
-        topology.kubernetes.io/zone: ZONE_2
+        topology.kubernetes.io/zone: us-west1-b
       containers:
         - name: jicofo
           env:

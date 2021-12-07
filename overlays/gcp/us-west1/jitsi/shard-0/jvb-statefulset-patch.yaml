@@ -16,7 +16,7 @@ spec:
     spec:
       # avoid that pods of different shards share zone
       nodeSelector:
-        topology.kubernetes.io/zone: ZONE_1
+        topology.kubernetes.io/zone: us-west1-a
       containers:
         - name: jvb
           env:

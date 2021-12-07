@@ -1,5 +1,5 @@
 bases:
-  - ../jitsi-base
+  - ../../../../production/jitsi-base
 
 patchesStrategicMerge:
   - jvb-hpa-patch.yaml

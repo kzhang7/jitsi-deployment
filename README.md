@@ -111,30 +111,35 @@ for [Big Blue Button](https://bigbluebutton.org/). Therefore, some of the files 
 that setup. To exclude them delete all files starting with `bbb-` and remove the file names from the respective
 `kustomization.yaml` files.
 
-## Updates for GCP
+## Updates to make
 
-1. Replace all storage class from `ionos-enterprise-hdd` to `standard` or `standard-rwo` or `premium-rwo` depends on your needs.
+1. Replaced all storage class from `ionos-enterprise-hdd` to `standard`.
 
-2. Update jisti to the latest version by replacing `stable-4548-1` with `stable-6433`.
+2. Updated jisti to the latest version by replacing `stable-4548-1` with `stable-6433`.
 
-   1. Update the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
-   2. Update the `jitsi-meet.cfg.lua` to the latest version in `prosody-configmap.yaml`. See (<https://github.com/jitsi/docker-jitsi-meet/blob/master/prosody/rootfs/defaults/conf.d/jitsi-meet.cfg.lua>)
+   1. Updated the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
+   2. Updated the `jitsi-meet.cfg.lua` to the latest version in `prosody-configmap.yaml`. See (<https://github.com/jitsi/docker-jitsi-meet/blob/master/prosody/rootfs/defaults/conf.d/jitsi-meet.cfg.lua>)
 
-3. Add `XMPP_MUC_DOMAIN` env with value `muc.meet.jitsi` in `jicofo-deployment.yaml` to fix the [Communication with remote domains is not enabled] issue: <https://github.com/jitsi/docker-jitsi-meet/issues/929>
+3. Added `XMPP_MUC_DOMAIN` env with value `muc.meet.jitsi` in `jicofo-deployment.yaml` to fix the [Communication with remote domains is not enabled] issue: <https://github.com/jitsi/docker-jitsi-meet/issues/929>
 
-4. Add `PUBLIC_URL` env with value of the public URL in `prosody-deployment.yaml` and `web-deployment.yaml` to fix the wss pointing to localhost issue: <https://community.jitsi.org/t/solved-bridgechannel-js-85-websocket-connection-to-wss-localhost-8443-colibri-ws-failed/86752/4>
+4. Added `PUBLIC_URL` env with value of the public URL in `prosody-deployment.yaml` and `web-deployment.yaml` to fix the wss pointing to localhost issue: <https://community.jitsi.org/t/solved-bridgechannel-js-85-websocket-connection-to-wss-localhost-8443-colibri-ws-failed/86752/4>
 
 5. Added missing environment variables in `prosody-deployment.yaml` and `web-deployment.yaml`.
 
-6. Change the default language by replacing `'de'` with `'en'` in web-configmap.yaml. Replace `Europe/Berlin` timezone with `UTC`.
+6. Changed the default language by replacing `'de'` with `'en'` in `web-configmap.yaml`. Replace `Europe/Berlin` timezone with `UTC`.
 
-7. Replace ZONE_1 and ZONE_2 with the appropriate zone names for `topology.kubernetes.io/zone` in all files.
+7. Removed all `bbb-` and `turn-` related configurations
 
-    For example, Replace `topology.kubernetes.io/zone: ZONE_1` with `topology.kubernetes.io/zone: us-west1-a`
+8. Install kustomize v3.5.4
 
-## Customization: Remove web deployments and move it to GCP app engine to save cost
+    ```bash
+    sudo cp kustomize /usr/bin
+    sudo chmod 755 /usr/bin/kustomize
+    ```
 
-1. Remove the following files:
+## Customizations for livestand
+
+1. Removed web deployments and move it to GCP app engine to save cost:
 
    ```text
    web-configmap.yaml
@@ -143,59 +148,12 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
    web-deployment-patch.yaml
    ```
 
-2. Updated `haproxy-configmap.yaml` to point prosody svc directly
+   Updated `haproxy-configmap.yaml` to point prosody svc directly
+
+2. Replaced `jitsi-messenger-schule` with `meet-livestand-io` in all files
+   Replaced `jitsi.dev.messenger.schule` with `meet-dev.livestand.io` in all files
+   Replaced `jitsi.staging.messenger.schule` with `meet-dev.livestand.io` in all files
 
 ## Installation
 
-1. Create a k8s cluster in standard mode in GKE (auto-pilot mode does not work), for example: `c1-us-west1.meet`, with at least two zones
-
-2. Switch to that k8s cluster
-
-    ```bash
-    gcloud config set account zhangkan440@gmail.com
-    gcloud config set project livestand
-    gcloud container clusters get-credentials c1-us-west1.meet --region=us-west1
-    kubectl config use-context gke_livestand_us-west1_c1-us-west1.meet
-    ```
-
-3. Install kustomize v3.5.4
-
-    ```bash
-    sudo cp kustomize /usr/bin
-    sudo chmod 755 /usr/bin/kustomize
-    ```
-
-4. Update all the secrets
-
-    ```bash
-    vi secretsfile
-    ./secrets.sh secretsfile production
-    ```
-
-5. Update the ingress domain
-
-    Replace `jitsi.messenger.schule` with `c1-us-west1.meet.livestand.io`
-    Replace `jitsi-messenger-schule` with `c1-us-west1-meet-livestand-io`
-
-    Replace `jitsi.dev.messenger.schule` with `c1-us-west1.meet-dev.livestand.io`
-    Replace `jitsi.staging.messenger.schule` with `c1-us-west1.meet-dev.livestand.io`
-
-6. Install Metacontroller
-
-    ```bash
-    kubectl create clusterrolebinding zhangkan440-cluster-admin-binding --clusterrole=cluster-admin --user=zhangkan440@gmail.com
-    kubectl apply -k https://github.com/metacontroller/metacontroller/manifests/production
-    ```
-
-7. Deploy everything
-
-    ```bash
-    cd overlays/production-monitoring
-    kustomize build . | kubectl apply -f -
-
-    cd overlays/production
-    kustomize build . | kubectl apply -f -
-
-    ```
-
-8. Reserve a static IP in GCP <https://console.cloud.google.com/networking/addresses/list> for the load balancer.
+To install the full setup for each cloud, please read [`overlays/{gcp|aws|azure|ionos}/{region}/README.md`](overlays/{gcp|aws|azure|ionos}/{region}/README.md)

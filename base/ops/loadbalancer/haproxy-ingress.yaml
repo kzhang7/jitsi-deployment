@@ -10,4 +10,4 @@ spec:
   - hosts:
     # fill in host here
     - jitsi.domainname
-    secretName: jitsi-messenger-schule-tls
+    secretName: meet-livestand-io-tls
