@@ -26,10 +26,10 @@
     ```bash
     ./secrets.sh secretsfile
 
-    cd overlay/gcp/us-west1/ops
+    cd overlays/gcp/us-west1/jisti
     kustomize build . | kubectl apply -f -
 
-    cd ../jisti
+    cd ../ops
     kustomize build . | kubectl apply -f -
 
     git reset --hard

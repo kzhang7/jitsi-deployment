@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - logging-namespace.yaml
 - eck-crd.yaml
+- eck-operator.yaml
 - kibana.yaml
 - fluentd-daemonset-elasticsearch-rbac.yaml
 - es-realm-secret.yaml

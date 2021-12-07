@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: grafana-ingress
@@ -17,5 +17,7 @@ spec:
         # only match /grafana and paths under /grafana/
         - path: /grafana(/|$)(.*)
           backend:
-            serviceName: grafana
-            servicePort: http
+            service:
+              name: grafana
+              port:
+                name: http
