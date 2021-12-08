@@ -158,3 +158,26 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 ## Installation
 
 To install the full setup for each cloud, please read [`overlays/{gcp|aws|azure|ionos}/{region}/README.md`](overlays/{gcp|aws|azure|ionos}/{region}/README.md)
+
+## Troubleshoot
+
+### Meetings are not routed to the correct shard
+
+   1. Login to haproxy and install the tools
+
+      ```bash
+      kubectl exec -it haproxy-{0|1|2|...} -n jitsi -- /bin/bash
+      apt-get install watch socat -y
+      ```
+
+   2. View the stick-table data and make sure all the haproxy nodes has the same data
+
+      ```bash
+      watch -n 1 'echo "show table jitsi-meet" | socat unix:/var/run/hapee-lb.sock -'
+      ```
+
+   3. View the stats and make sure the backend are healthy with the same ip across the haproxy nodes
+
+      ```bash
+      echo "show stat" | socat unix:/var/run/hapee-lb.sock -
+      ```
