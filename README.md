@@ -198,3 +198,12 @@ kubectl get namespace $NAMESPACE -o json |jq '.spec = {"finalizers":[]}' >temp.j
 curl -k -H "Content-Type: application/json" -X PUT --data-binary @temp.json 127.0.0.1:8001/api/v1/namespaces/$NAMESPACE/finalize
 )
 ```
+
+### Kill the stuck pods
+
+```bash
+kubectl delete pods  shard-1-jvb --grace-period=0 --force
+kubectl patch pod shard-1-jvb -p '{"metadata":{"finalizers":null}}'
+```
+
+If not working, go to GCP/AWS dashboard, find the pod, and edit the yaml file to set `'{"metadata":{"finalizers":null}}'`.
