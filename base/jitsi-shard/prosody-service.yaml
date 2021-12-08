@@ -10,7 +10,7 @@ spec:
   - name: "5222"
     port: 5222
     targetPort: 5222
-  - name: "5280"
+  - name: "http"
     port: 5280
     targetPort: 5280
   - name: "5347"

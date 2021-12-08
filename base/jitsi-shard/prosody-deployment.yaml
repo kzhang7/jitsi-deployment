@@ -77,7 +77,7 @@ spec:
             - name: XMPP_DOMAIN
               value: meet.livestand.io
             - name: XMPP_CROSS_DOMAIN
-              value: "false"
+              value: "true"
             - name: XMPP_AUTH_DOMAIN
               value: auth.meet.livestand.io
             - name: XMPP_MUC_DOMAIN

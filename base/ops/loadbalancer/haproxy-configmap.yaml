@@ -61,4 +61,12 @@ data:
       # _http._tcp.web.jitsi.svc.cluster.local:80 is a SRV DNS record
       # A records don't work here because their order might change between calls and would result in different
       # shard IDs for each peered HAproxy
-      server-template shard 0-5 _http._tcp.web.jitsi.svc.cluster.local:80 check resolvers kube-dns init-addr none
+      # server-template shard 0-5 _http._tcp.web.jitsi.svc.cluster.local:80 check resolvers kube-dns init-addr none
+      # The server-template above does not work because the sequence is not guaranteed
+      server shard0 _http._tcp.shard-0-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      server shard1 _http._tcp.shard-1-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      server shard2 _http._tcp.shard-2-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      server shard3 _http._tcp.shard-3-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      server shard4 _http._tcp.shard-4-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      server shard5 _http._tcp.shard-5-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
+      server shard6 _http._tcp.shard-6-prosody.jitsi.svc.cluster.local:5280 check resolvers kube-dns init-addr none
