@@ -120,7 +120,7 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
    1. Updated the `config.js` and `interface_config.js` to the latest version in `web-configmap.yaml`
    2. Updated the `jitsi-meet.cfg.lua` to the latest version in `prosody-configmap.yaml`. See (<https://github.com/jitsi/docker-jitsi-meet/blob/master/prosody/rootfs/defaults/conf.d/jitsi-meet.cfg.lua>)
 
-3. Added `XMPP_MUC_DOMAIN` env with value `muc.meet.jitsi` in `jicofo-deployment.yaml` to fix the [Communication with remote domains is not enabled] issue: <https://github.com/jitsi/docker-jitsi-meet/issues/929>
+3. Added `XMPP_MUC_DOMAIN` env with value `muc.meet.livestand.io` in `jicofo-deployment.yaml` to fix the [Communication with remote domains is not enabled] issue: <https://github.com/jitsi/docker-jitsi-meet/issues/929>
 
 4. Added `PUBLIC_URL` env with value of the public URL in `prosody-deployment.yaml` and `web-deployment.yaml` to fix the wss pointing to localhost issue: <https://community.jitsi.org/t/solved-bridgechannel-js-85-websocket-connection-to-wss-localhost-8443-colibri-ws-failed/86752/4>
 

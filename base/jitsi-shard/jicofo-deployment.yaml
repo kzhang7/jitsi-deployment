@@ -41,13 +41,13 @@ spec:
             - name: XMPP_SERVER
               value: prosody
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.livestand.io
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.livestand.io
             - name: XMPP_MUC_DOMAIN
-              value: muc.meet.jitsi
+              value: muc.meet.livestand.io
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.livestand.io
             - name: JICOFO_COMPONENT_SECRET
               valueFrom:
                 secretKeyRef:

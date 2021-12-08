@@ -79,11 +79,11 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.livestand.io
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.livestand.io
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.livestand.io
             - name: JVB_STUN_SERVERS
               valueFrom:
                 secretKeyRef:

@@ -70,15 +70,15 @@ spec:
             - name: JICOFO_AUTH_USER
               value: focus
             - name: XMPP_DOMAIN
-              value: meet.jitsi
+              value: meet.livestand.io
             - name: XMPP_AUTH_DOMAIN
-              value: auth.meet.jitsi
+              value: auth.meet.livestand.io
             - name: XMPP_INTERNAL_MUC_DOMAIN
-              value: internal-muc.meet.jitsi
+              value: internal-muc.meet.livestand.io
             - name: XMPP_BOSH_URL_BASE
               value: http://prosody:5280
             - name: XMPP_MUC_DOMAIN
-              value: muc.meet.jitsi
+              value: muc.meet.livestand.io
             - name: TZ
               value: UTC
             - name: JVB_TCP_HARVESTER_DISABLED
