@@ -161,6 +161,12 @@ To install the full setup for each cloud, please read [`overlays/{gcp|aws|azure|
 
 ## Troubleshoot
 
+## Sample meetings
+
+User 1: <https://meet.livestand.io/IOSAppHomePageDisscussion-kj9uesqg_us1?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJqaXRzaSIsInN1YiI6Im1lZXQtdXMtd2VzdDEubGl2ZXN0YW5kLmlvIiwiaWF0IjoxNTE2MjM5MDIyLCJpc3MiOiJsaXZlc3RhbmQuaW8iLCJyb29tIjoiSU9TQXBwSG9tZVBhZ2VEaXNzY3Vzc2lvbi1rajl1ZXNxZ191czEiLCJjb250ZXh0Ijp7InVzZXIiOnsibmFtZSI6IkpXVCBVc2VyMSJ9fX0.zVWbjdJY2EpUUETqqmytsvehTJfHztKvtprh_CS6CSY>
+
+User 2: <https://meet.livestand.io/IOSAppHomePageDisscussion-kj9uesqg_us1?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJsaXZlc3RhbmQuaW8iLCJzdWIiOiJsaXZlc3RhbmQuaW8iLCJpYXQiOjE1MTYyMzkwMjMsImlzcyI6ImxpdmVzdGFuZC5pbyIsInJvb20iOiJJT1NBcHBIb21lUGFnZURpc3NjdXNzaW9uLWtqOXVlc3FnX3VzMSIsImNvbnRleHQiOnsidXNlciI6eyJuYW1lIjoiSldUIFVzZXIyIn19fQ.enFBdq91VogYIIy7MyM3hb7xPLfQVd8t_RMrvzUHo7U>
+
 ### Meetings are not routed to the correct shard
 
    1. Login to haproxy and install the tools
@@ -181,3 +187,14 @@ To install the full setup for each cloud, please read [`overlays/{gcp|aws|azure|
       ```bash
       echo "show stat" | socat unix:/var/run/hapee-lb.sock -
       ```
+
+### Kill the stuck namespace
+
+```bash
+(
+NAMESPACE=jitsi
+kubectl proxy &
+kubectl get namespace $NAMESPACE -o json |jq '.spec = {"finalizers":[]}' >temp.json
+curl -k -H "Content-Type: application/json" -X PUT --data-binary @temp.json 127.0.0.1:8001/api/v1/namespaces/$NAMESPACE/finalize
+)
+```
