@@ -115,31 +115,6 @@ spec:
             # config to allow exporting metrics in prometheus format by prometheus add-on
             - name: GLOBAL_CONFIG
               value: statistics = "internal";\nstatistics_interval = 15;
-            - name: TURNCREDENTIALS_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: TURNCREDENTIALS_SECRET
-            - name: TURN_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: TURN_HOST
-            - name: STUN_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: STUN_PORT
-            - name: TURN_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: TURN_PORT
-            - name: TURNS_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: jitsi-config
-                  key: TURNS_PORT
             - name: PUBLIC_URL
               value: https://meet.livestand.io
             - name: AUTH_TYPE
