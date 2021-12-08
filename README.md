@@ -139,9 +139,8 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 
 ## Customizations for livestand
 
-1. Moved web stack to GCP app engine to make the frontend customization easier.
-   The web stack in this repo is just acting as a reverse proxy for prosody. It should not serve the jitsi-meet frontend.
-   Note: We need to keep the web stack for _http._tcp.web.jitsi.svc.cluster.local DNS entry for HA Proxy, while keeping the prosody their own Cluster IP for jicofo
+1. Removed the web stack and used GCP app engine to make the frontend customization easier.
+   Removed the following file:
 
    ```text
    web-configmap.yaml
