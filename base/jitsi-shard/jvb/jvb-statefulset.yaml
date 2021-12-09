@@ -92,7 +92,7 @@ spec:
             - name: JICOFO_AUTH_USER
               value: focus
             - name: JVB_TCP_HARVESTER_DISABLED
-              value: "true"
+              value: "false"
             - name: JVB_ENABLE_APIS
               value: colibri,rest
             - name: JVB_AUTH_USER
@@ -109,5 +109,5 @@ spec:
                   key: JICOFO_AUTH_PASSWORD
             - name: JVB_BREWERY_MUC
               value: jvbbrewery
-            - name: TZ
-              value: UTC
+            - name: SHUTDOWN_REST_ENABLED
+              value: "true"

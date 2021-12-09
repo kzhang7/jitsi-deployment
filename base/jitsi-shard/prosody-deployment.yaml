@@ -107,8 +107,6 @@ spec:
                   key: JICOFO_AUTH_PASSWORD
             - name: TZ
               value: UTC
-            - name: JVB_TCP_HARVESTER_DISABLED
-              value: "true"
             # activate add-ons that enrich the available stats of prosody
             - name: GLOBAL_MODULES
               value: prometheus,measure_stanza_counts,measure_client_presence

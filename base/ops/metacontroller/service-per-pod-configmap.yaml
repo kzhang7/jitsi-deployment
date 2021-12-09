@@ -57,6 +57,12 @@ data:
                 "protocol": "UDP",
                 "targetPort": basePort + index,
                 "nodePort": basePort + index
+              },
+              {
+                "port": basePort + index,
+                "protocol": "TCP",
+                "targetPort": basePort + index,
+                "nodePort": basePort + index
               }
             ]
           }
