@@ -159,9 +159,102 @@ that setup. To exclude them delete all files starting with `bbb-` and remove the
 
 To install the full setup for each cloud, please read [`overlays/{gcp|aws|azure|ionos}/{region}/README.md`](overlays/{gcp|aws|azure|ionos}/{region}/README.md)
 
+
+## Setup coturn server
+
+We should not use k8s because turn needs static IP
+
+1. Create VM
+2. Assign static IP
+3. Create DNS Record
+4. Add Firewall rule to allow tcp/80,443 and udp/all
+
+5. Install coturn
+
+   ```bash
+   sudo apt-get -y update
+   sudo apt-get -y install coturn
+   ```
+
+6. Enable TURN
+
+   ```bash
+   sudo vim /etc/default/coturn
+   ```
+
+   ```text
+   TURNSERVER_ENABLED=1
+   ```
+
+7. Create log folder
+
+   ```bash
+   mkdir /var/log/turnserver
+   chown turnserver:turnserver /var/log/turnserver
+   ```
+
+8. Install certbot for letsencrypt and obtain SSL cert
+
+   ```bash
+   sudo apt-get -y  update &&\
+   sudo apt-get -y install software-properties-common &&\
+   sudo add-apt-repository -y universe &&\
+   sudo add-apt-repository -y ppa:certbot/certbot &&\
+   sudo apt-get -y update
+
+   sudo apt-get -y install certbot
+
+   # You will be prompted to provide your domain name
+   sudo certbot certonly --standalone
+
+   # Add renew to cron 
+   echo "certbot renew" >> /etc/cron.monthly/certbot
+
+   # Fix permission
+   chmod 711 /etc/letsencrypt/live
+   chmod 711 /etc/letsencrypt/archive
+
+   chown -R turnserver:turnserver /etc/letsencrypt/live/<domain>
+   chown -R turnserver:turnserver /etc/letsencrypt/archive/<domain>
+   ```
+
+9. Generate dhparams.pem
+
+   ```bash
+   cd /etc/letsencrypt
+   openssl dhparam -out dhparams.pem 2048
+   ```
+
+10. Configure coturn `vi /etc/turnserver.conf`
+    Comment out `syslog` and add the following:
+
+    ```text
+    fingerprint
+    static-auth-secret=<some-secret>
+
+    realm=<domain>
+    external-ip=<external-ip>
+
+    listening-ip=0.0.0.0
+    listening-port=80
+    tls-listening-port=443
+    cert=/etc/letsencrypt/live/<domain>/cert.pem
+    pkey=/etc/letsencrypt/live/<domain>/privkey.pem
+    dh-file=/etc/letsencrypt/dhparams.pem
+
+    log-file=/var/log/turnserver/turnserver.log
+    verbose
+    ```
+
+11. Allow coturn to bind lower number ports
+
+    ```bash
+    sudo setcap CAP_NET_BIND_SERVICE=+eip /usr/bin/turnserver
+    ```
+
 ## Troubleshoot
 
-## Sample meetings
+### Sample meetings
 
 User 1: <https://meet.livestand.io/IOSAppHomePageDisscussion-kj9uesqg_us1?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJqaXRzaSIsInN1YiI6Im1lZXQtdXMtd2VzdDEubGl2ZXN0YW5kLmlvIiwiaWF0IjoxNTE2MjM5MDIyLCJpc3MiOiJsaXZlc3RhbmQuaW8iLCJyb29tIjoiSU9TQXBwSG9tZVBhZ2VEaXNzY3Vzc2lvbi1rajl1ZXNxZ191czEiLCJjb250ZXh0Ijp7InVzZXIiOnsibmFtZSI6IkpXVCBVc2VyMSJ9fX0.zVWbjdJY2EpUUETqqmytsvehTJfHztKvtprh_CS6CSY>
 
